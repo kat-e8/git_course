@@ -133,3 +133,7 @@ And the when you're done, you can merge the feature into the main with no confli
 git checkout main
 git merge feature
 It was key to pull changes into the feature before merging it back to the main.
+
+here's the next scenario - the remote repo gets ahead of the local repo. When this is the case
+the local repo won't be able to just push to the remote, the remote will have a repo that the
+local repo won't have
