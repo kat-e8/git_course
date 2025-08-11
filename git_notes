@@ -119,3 +119,6 @@ branch checkout bName
 git merge bName -> merge feature branch into main branch
 git push -u origin bName pushes feature branch to remote repo and creates same feature branch
 in remote repo.
+Command git branch -d bName removes branch from git. This command only removes the local
+branch but not the remote one. To remove remote branch use
+git push origin --delete bName
