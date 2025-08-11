@@ -1,0 +1,99 @@
+add
+commit
+push
+
+(un)tracked
+(un)modified
+
+working directory
+staging area
+local repository
+remote repository
+
+inside of working directory there are three types of files
+untracked
+unmodified
+modified
+
+command git add drives a file from working directory to staging area
+
+A file is either wd/untracked, wd/unmodified or wd/modified
+
+staged files are ready for commit.
+
+the commit command drives staged files to the local repo. Once a file has been staged, it returns
+to the wd/unmodified state.
+Making changes to the file and saving them drives it from wd/unmodified to wd/modified.
+Modified files have to be driven to the staging area and this is done using add command
+applying git add to a file drives it from wd/modified to staged.
+
+Look at it this way. A file has states or can be at one of multiple levels
+1. Working directory: Within the working directory there are sublevels:
+wd/untracked, wd/unmodified, wd/modified.
+2. Staging area
+3. repository
+When a file is first added to a git-enabled directory, it's status is wd/untracked. Changes made
+to an untracked file are not picked up by git.
+The git add command does one thing - drives a file from the any of the working directory levels to
+the staging area. If a file is @wd/untracked it will be moved to the staging area if the file
+is @wd/modified it will be moved to the staging area as well but if a file is @wd/unmodified nothing
+will happen to it.
+Now while the git add command can be applied to a specific file or to all files at once, the git 
+commit command drives ALL files in the staging area(INDEX) to the local repo(HEAD).
+Now the local repo mantains a history of commits. A single commit is a snapshot of all the files
+in the staging area. It contains all information about all the files, what changes were made
+by whom where...
+Each git repo will maintain a history of commits.
+First commit holds the original state
+Second commit holds only the changes made after the first commit and a pointer to the first
+commit
+The third commit holds only changes made after second commit and a pointer to the previous
+commit - second commit.
+Every commit stores only changes from the previous commit and a pointer to the previous commit
+The first commit has 0 parents. The second commit's parent is the first commit and so on.
+Each commit saves only changes and a pointer to its parent.
+HEAD is a commit pointer. The active commit is the commit pointed to by the HEAD pointer.
+git commit creates a snapshot of all the changes and saves it on disk. The initial push
+command copies the entire commit timeline to the remote repo. And then as you work
+on the local repo, the remote repo will be several commits behind the local repo. Running a
+push update this time will bring the two repos up-to-date - it will copy all commits that
+the remote repo didn't have. So a push is a differential copy of commits.
+A branch is its own timeline. At this point all we have is a main timeline. We can create
+an x timeline...
+
+Let's say you've just created a commit. Recall that after a commit all files return to 
+wd/unmodified state. Now, if you make a change to one of the files it'll change to state
+wd/modified. At this stage if you run the git diff command, it'll show you the changes that
+you made since the last commit. Additions will appear in green and omissions in red.
+git diff can be passed two commits and it'll compute the difference between the two and show
+ommissions in red and additions in green
+git diff com1 com2, com1 > com2
+
+To stash is to save something for temporary purpose
+A stash is a list like data structure that stores modified files in the working directory before
+they are commited. Command git stash temporarily saves files in their modified states and restores
+them to state wd/unmodified. once you've done this you can continue working, add, commit and 
+push but the stash will not be part of it - it'll be stored somewhere on the side. Command
+git stash list lists all stashes. Command git stash pop reinstates the most recent modified
+files. command git stash clear removes all stashes in the stash.
+Now a better way of doing it
+git stash save "name" saves a stash and gives it a name. When you run git stash list you'll 
+notice that all your stashes are named and have an index. Now instead of using the pop command
+you can restore a stash using git stash apply idx, where idx is the index of the stash
+
+Recall that files are in states. 
+wd/untracked
+wd/unmodified
+wd/modified
+staged
+commited
+Now let's say you've just commited all files in your staging area. Recall that all commited files
+return to status of wd/unmodified. Now, you make changes to file X and save those changes. Then
+file X will move to state wd/modified. If you wanted to undo all those saved changes, you can
+use command git restore X and the file will be reverted back to its state when the last commit
+was made. Changes and Save move file from wd/unmodified to wd/modified now command git restore
+X moves a file from wd/modified back to wd/unmodified. Cool! But wait there's more.
+Let's say you've already staged a file and decide you want to undo those changes. So you've made changed
+saved and run git add . and now your file is staged. Command git restore --staged X moves a file from
+state 'staged' back to wd/modified. Now finally to move the file from wd/modified to wd/unmodifed you'll have
+to run the git restore X command and you'll be back to where you were at last commit but for this file only.
