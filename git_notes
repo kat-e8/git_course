@@ -97,3 +97,25 @@ Let's say you've already staged a file and decide you want to undo those changes
 saved and run git add . and now your file is staged. Command git restore --staged X moves a file from
 state 'staged' back to wd/modified. Now finally to move the file from wd/modified to wd/unmodifed you'll have
 to run the git restore X command and you'll be back to where you were at last commit but for this file only.
+
+Command git branch bName creates a new branch with specified name.
+Command git checkout bName switches to specified branch. A branch is its own independent timeline
+changes made while inside a branch belong to that timeline and are only visible to that timeline.
+This means that if we switch to a different timeline, we won't be able to see changes we made
+in another timeline. When the git checkout bName command is exected the head moves to the
+new timeline. think of if its way, a copy is made of all the commit history of the branch
+we're switching from. The branch we're switching to will have access to this timeline. Because
+the head has moved any changes made to the files will be part of this branch.
+Recall that when we branched out we took a copy of all the commit history and started a new
+timeline with that history. In the new branch we added more commits now the current branch is
+x commits ahead of the branch it was created from.
+To merge into a branch is to add the commits that were created in that branch.
+During a merge the commits created in the other branch are added to the commit history of the
+original branch. During a commit the original branch is brought up to date with the
+feature/bug/test branch.Now after all of these changes, the remote main branch will be out
+of sync with the local main branch so you'll have to push changes to the main branch
+git branch bName
+branch checkout bName
+git merge bName -> merge feature branch into main branch
+git push -u origin bName pushes feature branch to remote repo and creates same feature branch
+in remote repo.
