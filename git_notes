@@ -122,3 +122,14 @@ in remote repo.
 Command git branch -d bName removes branch from git. This command only removes the local
 branch but not the remote one. To remove remote branch use
 git push origin --delete bName
+
+here's the next scenario: you create a feature branch off the main branch. You make x commits
+on the feature branch. But before you could merge these commits into the main branch, some change
+is made to the main branch. Now, the feature branch won't have that commit so merging won't work.
+git checkout feature
+git pull origin main
+These commands will add the commits that feature missed out on.
+And the when you're done, you can merge the feature into the main with no conflicts by
+git checkout main
+git merge feature
+It was key to pull changes into the feature before merging it back to the main.
